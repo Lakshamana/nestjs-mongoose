@@ -3,7 +3,9 @@ import { Document } from 'mongoose'
 
 export type UserDocument = User & Document
 
-@Schema()
+@Schema({
+  timestamps: true,
+})
 export class User {
   @Prop()
   email: string
@@ -13,6 +15,14 @@ export class User {
 
   @Prop()
   favoriteFoods: string[]
+
+  @Prop({
+    required: false,
+    default: null,
+  })
+  deleted_at?: Date
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
+
+UserSchema.index({ email: 1, deleted_at: 1 }, { unique: true })
