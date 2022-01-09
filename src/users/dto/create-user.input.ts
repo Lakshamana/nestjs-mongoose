@@ -1,6 +1,6 @@
 import { IsDate, IsEmail, IsNotEmpty } from 'class-validator'
 
-export class CreateUpdateUser {
+export class CreateUserInput {
   @IsEmail()
   @IsNotEmpty()
   email: string

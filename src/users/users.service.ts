@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Types } from 'mongoose'
-import { CreateUpdateUser } from './dto/create-update-user.input'
+import { CreateUserInput } from './dto/create-user.input'
+import { UpdateUserInput } from './dto/update-user.input'
 import { UserInput } from './dto/user.input'
 import { UserOutput } from './dto/user.output'
 import { User } from './schemas/user.schema'
@@ -18,11 +19,11 @@ export class UsersService {
     return this.usersRepository.find(filter)
   }
 
-  createUser(user: CreateUpdateUser): Promise<UserOutput> {
+  createUser(user: CreateUserInput): Promise<UserOutput> {
     return this.usersRepository.create({ ...user, favoriteFoods: [] })
   }
 
-  updateUser(id: Types.ObjectId, user: CreateUpdateUser): Promise<UserOutput> {
+  updateUser(id: Types.ObjectId, user: UpdateUserInput): Promise<UserOutput> {
     return this.usersRepository.findOneAndUpdate(id, user)
   }
 

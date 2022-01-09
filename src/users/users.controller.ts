@@ -1,10 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { Types } from 'mongoose'
 import { ParseMongoIdPipe } from '@/common/pipes'
-import { CreateUpdateUser } from './dto/create-update-user.input'
+import { CreateUserInput } from './dto/create-user.input'
 import { UserInput } from './dto/user.input'
 import { UserOutput } from './dto/user.output'
 import { UsersService } from './users.service'
+import { UpdateUserInput } from './dto/update-user.input'
 
 @Controller('users')
 export class UsersController {
@@ -21,14 +22,14 @@ export class UsersController {
   }
 
   @Post()
-  createUser(@Body() payload: CreateUpdateUser): Promise<UserOutput> {
+  createUser(@Body() payload: CreateUserInput): Promise<UserOutput> {
     return this.usersService.createUser(payload)
   }
 
   @Put(':id')
   updateUser(
     @Param('id') id: string,
-    @Body() payload: CreateUpdateUser,
+    @Body() payload: UpdateUserInput,
   ): Promise<UserOutput> {
     return this.usersService.updateUser(new Types.ObjectId(id), payload)
   }
