@@ -20,7 +20,8 @@ async function bootstrap() {
 
   app.enableCors(corsOptions)
 
-  app.use(helmet)
+  //@ts-ignore
+  app.use(helmet())
 
   app.useGlobalPipes(
     new ValidationPipe({
