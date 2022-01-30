@@ -1,10 +1,11 @@
 import {
+  ArrayNotEmpty,
   IsArray,
   IsDate,
   IsEmail,
+  IsNotEmpty,
   IsOptional,
-  MinLength,
-  ValidationArguments,
+  IsString,
 } from 'class-validator'
 
 export class UpdateUserInput {
@@ -16,16 +17,10 @@ export class UpdateUserInput {
   @IsOptional()
   birthDate: Date
 
-  @IsArray({ each: true })
-  @MinLength(1, {
-    message: (args: ValidationArguments) => {
-      for (const value in args.value) {
-        if (!value.length) {
-          return 'Every favorite food must be 1-char long'
-        }
-      }
-    },
-  })
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
   @IsOptional()
   favoriteFoods: string[]
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { Types } from 'mongoose'
 import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
@@ -12,15 +12,22 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   getUserById(id: Types.ObjectId): Promise<User> {
-    return this.usersRepository.findOne({ id })
+    return this.usersRepository.findOne({ _id: id })
   }
 
   getUsers(filter: UserInput): Promise<UserOutput[]> {
     return this.usersRepository.find(filter)
   }
 
-  createUser(user: CreateUserInput): Promise<UserOutput> {
-    return this.usersRepository.create({ ...user, favoriteFoods: [] })
+  async createUser(user: CreateUserInput): Promise<UserOutput> {
+    const favoriteFoods = user.favoriteFoods || [] as string[]
+
+    const userExists = await this.usersRepository.findOne({ email: user.email })
+    if (userExists) {
+      throw new BadRequestException('Email already exists')
+    }
+
+    return this.usersRepository.create({ ...user, favoriteFoods })
   }
 
   updateUser(id: Types.ObjectId, user: UpdateUserInput): Promise<UserOutput> {

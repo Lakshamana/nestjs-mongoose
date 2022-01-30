@@ -17,8 +17,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.usersService.getUserById(new Types.ObjectId(id))
+  getUser(@Param('id') id: Types.ObjectId) {
+    return this.usersService.getUserById(id)
   }
 
   @Post()
