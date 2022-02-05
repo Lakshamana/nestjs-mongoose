@@ -1,11 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
-import { Types } from 'mongoose'
-import { ParseMongoIdPipe } from '@/common/pipes'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common'
 import { CreateUserInput } from './dto/create-user.input'
 import { UserInput } from './dto/user.input'
 import { UserOutput } from './dto/user.output'
 import { UsersService } from './users.service'
 import { UpdateUserInput } from './dto/update-user.input'
+import { GetDocument } from '@/common/decorators/get-document.decorator'
+import { IUser } from './interfaces/user.interface'
 
 @Controller('users')
 export class UsersController {
@@ -17,25 +25,27 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param('id') id: Types.ObjectId) {
-    return this.usersService.getUserById(id)
+  getUser(@GetDocument('users') user: IUser) {
+    return this.usersService.getUserById(user._id)
   }
 
   @Post()
-  createUser(@Body() payload: CreateUserInput): Promise<UserOutput> {
-    return this.usersService.createUser(payload)
+  async createUser(@Body() payload: CreateUserInput): Promise<UserOutput> {
+    const user = await this.usersService.createUser(payload)
+    return UserOutput.factory(UserOutput, user)
   }
 
   @Put(':id')
-  updateUser(
-    @Param('id') id: string,
+  async updateUser(
+    @GetDocument('users') user: IUser,
     @Body() payload: UpdateUserInput,
   ): Promise<UserOutput> {
-    return this.usersService.updateUser(new Types.ObjectId(id), payload)
+    const updatedUser = await this.usersService.updateUser(user._id, payload)
+    return UserOutput.factory(UserOutput, updatedUser)
   }
 
   @Delete(':id')
-  removeUser(@Param('id') id: string): Promise<UserOutput> {
-    return this.usersService.removeUser(new Types.ObjectId(id))
+  removeUser(@GetDocument('users') user: IUser): Promise<UserOutput> {
+    return this.usersService.removeUser(user._id)
   }
 }

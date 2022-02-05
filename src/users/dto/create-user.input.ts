@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer'
+import { Type } from 'class-transformer'
 import {
   ArrayNotEmpty,
   IsArray,
@@ -14,7 +14,7 @@ export class CreateUserInput {
   email: string
 
   @IsNotEmpty()
-  @Transform(date => new Date(String(date.value)))
+  @Type(() => Date)
   @MaxDate(new Date())
   birthDate: Date
 

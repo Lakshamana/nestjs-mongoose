@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { Types } from 'mongoose'
 import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
@@ -11,8 +11,13 @@ import { UsersRepository } from './users.repository'
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  getUserById(id: Types.ObjectId): Promise<User> {
-    return this.usersRepository.findOne({ _id: id })
+  async getUserById(_id: Types.ObjectId): Promise<User> {
+    const user = await this.usersRepository.findOne({ _id })
+    if (!user) {
+      throw new NotFoundException('User not found')
+    }
+
+    return user
   }
 
   getUsers(filter: UserInput): Promise<UserOutput[]> {
@@ -30,8 +35,13 @@ export class UsersService {
     return this.usersRepository.create({ ...user, favoriteFoods })
   }
 
-  updateUser(id: Types.ObjectId, user: UpdateUserInput): Promise<UserOutput> {
-    return this.usersRepository.findOneAndUpdate(id, user)
+  async updateUser(id: Types.ObjectId, user: UpdateUserInput): Promise<UserOutput> {
+    if (!Object.keys(user).length) {
+      throw new BadRequestException('Update payload cannot be empty')
+    }
+
+    const updatedUser = await this.usersRepository.findOneAndUpdate(id, user)
+    return updatedUser
   }
 
   removeUser(id: Types.ObjectId): Promise<UserOutput> {

@@ -16,21 +16,20 @@ export class UsersRepository {
   }
 
   async create(user: User): Promise<User> {
-    const newUser = new this.userModel(user)
-    return newUser.save()
+    return this.userModel.create(user)
   }
 
   async findOneAndUpdate(
-    id: Types.ObjectId,
+    _id: Types.ObjectId,
     updateProperties: Partial<User>,
   ): Promise<User> {
-    return this.userModel.findOneAndUpdate({ id }, updateProperties, { new: true })
+    return this.userModel.findOneAndUpdate({ _id }, updateProperties, { new: true })
   }
 
-  async remove(id: Types.ObjectId): Promise<User> {
+  async remove(_id: Types.ObjectId): Promise<User> {
     return this.userModel.findOneAndUpdate(
-      { id, deleted_at: false },
-      { deleted_at: true },
+      { _id, deleted_at: null },
+      { deleted_at: new Date() },
       { new: true },
     )
   }
