@@ -25,7 +25,7 @@ export class UsersService {
   }
 
   async createUser(user: CreateUserInput): Promise<UserOutput> {
-    const favoriteFoods = user.favoriteFoods || [] as string[]
+    const favoriteFoods = user.favoriteFoods || ([] as string[])
 
     const userExists = await this.usersRepository.findOne({ email: user.email })
     if (userExists) {
@@ -35,13 +35,8 @@ export class UsersService {
     return this.usersRepository.create({ ...user, favoriteFoods })
   }
 
-  async updateUser(id: Types.ObjectId, user: UpdateUserInput): Promise<UserOutput> {
-    if (!Object.keys(user).length) {
-      throw new BadRequestException('Update payload cannot be empty')
-    }
-
-    const updatedUser = await this.usersRepository.findOneAndUpdate(id, user)
-    return updatedUser
+  updateUser(id: Types.ObjectId, user: UpdateUserInput): Promise<UserOutput> {
+    return this.usersRepository.findOneAndUpdate(id, user)
   }
 
   removeUser(id: Types.ObjectId): Promise<UserOutput> {

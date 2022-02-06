@@ -1,26 +1,6 @@
-import {
-  ArrayNotEmpty,
-  IsArray,
-  IsDate,
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator'
+import { PartialType, PickType } from '@nestjs/mapped-types'
+import { CreateUserInput } from './create-user.input'
 
-export class UpdateUserInput {
-  @IsEmail()
-  @IsOptional()
-  email: string
-
-  @IsDate()
-  @IsOptional()
-  birthDate: Date
-
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsString({ each: true })
-  @IsNotEmpty({ each: true })
-  @IsOptional()
-  favoriteFoods: string[]
-}
+export class UpdateUserInput extends PartialType(
+  PickType(CreateUserInput, ['birthDate', 'email', 'favoriteFoods']),
+) {}

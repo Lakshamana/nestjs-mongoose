@@ -42,8 +42,8 @@ $ pnpm run test:cov
 Nest is [MIT licensed](LICENSE).
 
 ## TODO
-[  ] Use configuration module
-[  ] Use authentication
-[  ] Create favoriteFoods schema and decouple from users schema
-[  ] Create another repository with just favoriteFoods and
+[ ] Use configuration module
+[ ] Use authentication
+[ ] Create favoriteFoods schema and decouple from users schema
+[ ] Create another repository with just favoriteFoods and
 use Microservices to communicate with favoriteFoods module

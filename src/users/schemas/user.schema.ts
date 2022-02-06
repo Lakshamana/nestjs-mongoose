@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document, Mongoose } from 'mongoose'
+import { Document } from 'mongoose'
 import { Factory } from 'nestjs-seeder'
 
 export type UserDocument = User & Document

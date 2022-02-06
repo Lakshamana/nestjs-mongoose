@@ -4,6 +4,7 @@ specifiers:
   '@nestjs/cli': ^8.0.0
   '@nestjs/common': ^8.0.0
   '@nestjs/core': ^8.0.0
+  '@nestjs/mapped-types': ^1.0.1
   '@nestjs/mongoose': ^9.0.2
   '@nestjs/platform-express': ^8.0.0
   '@nestjs/schematics': ^8.0.0
@@ -43,6 +44,7 @@ specifiers:
 dependencies:
   '@nestjs/common': 8.2.4_7b1fc936b9361df55228aaa721957d0e
   '@nestjs/core': 8.2.4_9268be749edef82acbde8886c93c3484
+  '@nestjs/mapped-types': 1.0.1_1f21807b554b988a9d09258923dc67a4
   '@nestjs/mongoose': 9.0.2_a58c75c366c008d8b100c118cc9ca17b
   '@nestjs/platform-express': 8.2.4_4074b1ae164556f5db19ac4b8b5667b7
   class-transformer: 0.5.1
@@ -858,6 +860,25 @@ packages:
       rxjs: 7.4.0
       tslib: 2.3.1
       uuid: 8.3.2
+    dev: false
+
+  /@nestjs/mapped-types/1.0.1_1f21807b554b988a9d09258923dc67a4:
+    resolution: {integrity: sha512-NFvofzSinp00j5rzUd4tf+xi9od6383iY0JP7o0Bnu1fuItAUkWBgc4EKuIQ3D+c2QI3i9pG1kDWAeY27EMGtg==}
+    peerDependencies:
+      '@nestjs/common': ^7.0.8 || ^8.0.0
+      class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0
+      class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0
+      reflect-metadata: ^0.1.12
+    peerDependenciesMeta:
+      class-transformer:
+        optional: true
+      class-validator:
+        optional: true
+    dependencies:
+      '@nestjs/common': 8.2.4_7b1fc936b9361df55228aaa721957d0e
+      class-transformer: 0.5.1
+      class-validator: 0.13.2
+      reflect-metadata: 0.1.13
     dev: false
 
   /@nestjs/mongoose/9.0.2_a58c75c366c008d8b100c118cc9ca17b:

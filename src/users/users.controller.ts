@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
 import { CreateUserInput } from './dto/create-user.input'
 import { UserInput } from './dto/user.input'
 import { UserOutput } from './dto/user.output'
@@ -14,6 +6,7 @@ import { UsersService } from './users.service'
 import { UpdateUserInput } from './dto/update-user.input'
 import { GetDocument } from '@/common/decorators/get-document.decorator'
 import { IUser } from './interfaces/user.interface'
+import { ValidateEmptyPayloadsPipe } from '@/commons/pipes/validate-empty-payloads.pipe'
 
 @Controller('users')
 export class UsersController {
@@ -38,7 +31,7 @@ export class UsersController {
   @Put(':id')
   async updateUser(
     @GetDocument('users') user: IUser,
-    @Body() payload: UpdateUserInput,
+    @Body(ValidateEmptyPayloadsPipe) payload: UpdateUserInput,
   ): Promise<UserOutput> {
     const updatedUser = await this.usersService.updateUser(user._id, payload)
     return UserOutput.factory(UserOutput, updatedUser)
