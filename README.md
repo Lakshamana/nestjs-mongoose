@@ -37,13 +37,16 @@ $ pnpm run test:e2e
 # test coverage
 $ pnpm run test:cov
 ```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
 
 ## TODO
+
 [ ] Use configuration module
 [ ] Use authentication
 [ ] Create favoriteFoods schema and decouple from users schema
+[ ] Add Permissions (RBAC) ACL
 [ ] Create another repository with just favoriteFoods and
 use Microservices to communicate with favoriteFoods module
