@@ -44,7 +44,7 @@ Nest is [MIT licensed](LICENSE).
 
 ## TODO
 
-[ ] Use configuration module
+[X] Use configuration module
 [ ] Use authentication
 [ ] Create favoriteFoods schema and decouple from users schema
 [ ] Add Permissions (RBAC) ACL
