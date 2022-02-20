@@ -4,9 +4,9 @@ import { UserInput } from './dto/user.input'
 import { UserOutput } from './dto/user.output'
 import { UsersService } from './users.service'
 import { UpdateUserInput } from './dto/update-user.input'
-import { GetDocument } from '@/common/decorators/get-document.decorator'
+import { GetDocument } from '@root/common/decorators/get-document.decorator'
 import { IUser } from './interfaces/user.interface'
-import { ValidateEmptyPayloadsPipe } from '@/commons/pipes/validate-empty-payloads.pipe'
+import { ValidateEmptyPayloadsPipe } from '@root/commons/pipes/validate-empty-payloads.pipe'
 
 @Controller('users')
 export class UsersController {
@@ -14,12 +14,12 @@ export class UsersController {
 
   @Get()
   getUsers(@Query() filter: UserInput): Promise<UserOutput[]> {
-    return this.usersService.getUsers(filter)
+    return this.usersService.findUsers(filter)
   }
 
   @Get(':id')
   getUser(@GetDocument('users') user: IUser) {
-    return this.usersService.getUserById(user._id)
+    return this.usersService.findUserById(user._id)
   }
 
   @Post()

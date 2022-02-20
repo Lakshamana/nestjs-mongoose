@@ -11,7 +11,7 @@ import { UsersRepository } from './users.repository'
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async getUserById(_id: Types.ObjectId): Promise<User> {
+  async findUserById(_id: Types.ObjectId): Promise<User> {
     const user = await this.usersRepository.findOne({ _id })
     if (!user) {
       throw new NotFoundException('User not found')
@@ -20,7 +20,16 @@ export class UsersService {
     return user
   }
 
-  getUsers(filter: UserInput): Promise<UserOutput[]> {
+  async findUserByEmail(email: string, withPassword = false): Promise<User> {
+    const user = await this.usersRepository.findOne({ email }, withPassword)
+    if (!user) {
+      throw new NotFoundException('User not found!')
+    }
+
+    return user
+  }
+
+  findUsers(filter: UserInput): Promise<UserOutput[]> {
     return this.usersRepository.find(filter)
   }
 

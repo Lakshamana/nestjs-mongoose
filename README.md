@@ -45,7 +45,8 @@ Nest is [MIT licensed](LICENSE).
 ## TODO
 
 [X] Use configuration module
-[ ] Use authentication
+[X] Create authentication
+[ ] Use authorization and route guards
 [ ] Create favoriteFoods schema and decouple from users schema
 [ ] Add Permissions (RBAC) ACL
 [ ] Create another repository with just favoriteFoods and

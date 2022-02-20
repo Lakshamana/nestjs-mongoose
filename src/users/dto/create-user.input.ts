@@ -5,6 +5,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
+  Matches,
   MaxDate,
 } from 'class-validator'
 
@@ -12,6 +13,13 @@ export class CreateUserInput {
   @IsEmail()
   @IsNotEmpty()
   email: string
+
+  @IsString()
+  @Matches(/^[-~]{8,24}$/, {
+    message: 'Password must contain 8-24 characters of letters, numbers and symbols',
+  })
+  @IsNotEmpty()
+  password: string
 
   @IsNotEmpty()
   @Type(() => Date)
