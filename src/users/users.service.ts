@@ -23,7 +23,7 @@ export class UsersService {
   async findUserByEmail(email: string, withPassword = false): Promise<User> {
     const user = await this.usersRepository.findOne({ email }, withPassword)
     if (!user) {
-      throw new NotFoundException('User not found!')
+      throw new NotFoundException('User not found')
     }
 
     return user
