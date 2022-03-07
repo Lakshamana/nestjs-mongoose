@@ -9,14 +9,21 @@ import {
   MaxDate,
 } from 'class-validator'
 
+const re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,24}$/
+
 export class CreateUserInput {
   @IsEmail()
   @IsNotEmpty()
   email: string
 
   @IsString()
-  @Matches(/^[-~]{8,24}$/, {
-    message: 'Password must contain 8-24 characters of letters, numbers and symbols',
+  @Matches(re, {
+    message: `Password must contain:
+      - At least one upper case English letter
+      - At least one lower case English letter
+      - At least one digit
+      - At least one special character or space
+      - Minimum 8 with maximum 24 characters length`,
   })
   @IsNotEmpty()
   password: string
